@@ -2,7 +2,7 @@ package com.github.sysimp.controllers;
 
 
 import com.github.sysimp.exceptions.NotFoundException;
-import com.github.sysimp.model.Rate;
+import com.github.sysimp.entity.Rate;
 import com.github.sysimp.services.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

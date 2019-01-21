@@ -1,6 +1,6 @@
 package com.github.sysimp.services;
 
-import com.github.sysimp.model.Rate;
+import com.github.sysimp.entity.Rate;
 
 import java.util.List;
 

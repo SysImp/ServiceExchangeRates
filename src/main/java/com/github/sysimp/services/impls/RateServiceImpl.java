@@ -1,6 +1,7 @@
 package com.github.sysimp.services.impls;
 
-import com.github.sysimp.model.Rate;
+import com.github.sysimp.entity.Rate;
+import com.github.sysimp.repositories.CurrencyRepository;
 import com.github.sysimp.repositories.RateRepository;
 import com.github.sysimp.services.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class RateServiceImpl implements RateService {
 
     @Autowired
     private RateRepository rateRepository;
+    @Autowired
+    private CurrencyRepository currencyRepository;
 
     @Override
     public Rate addRate(Rate rate) {
@@ -44,6 +47,6 @@ public class RateServiceImpl implements RateService {
 
     @Scheduled(fixedDelay = 1800000, initialDelay = 1000)
     public void updateRates() {
-        System.out.println("update rates...");
+
     }
 }
