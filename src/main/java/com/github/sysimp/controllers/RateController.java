@@ -3,7 +3,7 @@ package com.github.sysimp.controllers;
 
 import com.github.sysimp.exceptions.NotFoundException;
 import com.github.sysimp.model.Rate;
-import com.github.sysimp.repositories.RateRepository;
+import com.github.sysimp.services.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class RateController {
 
     @Autowired
-    private RateRepository rateRepository;
+    private RateService rateService;
 
     @GetMapping
     public ArrayList<Rate> showRates() {
-        return (ArrayList<Rate>) rateRepository.findAll();
+        return (ArrayList<Rate>) rateService.getAll();
     }
 
     @GetMapping("{id}")
