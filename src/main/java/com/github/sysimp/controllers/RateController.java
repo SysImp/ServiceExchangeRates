@@ -1,9 +1,9 @@
 package com.github.sysimp.controllers;
 
 
+import com.github.sysimp.entity.Currency;
 import com.github.sysimp.exceptions.NotFoundException;
-import com.github.sysimp.entity.Rate;
-import com.github.sysimp.services.RateService;
+import com.github.sysimp.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +17,15 @@ import java.util.ArrayList;
 public class RateController {
 
     @Autowired
-    private RateService rateService;
+    private CurrencyService currencyService;
 
     @GetMapping
-    public ArrayList<Rate> showRates() {
-        return (ArrayList<Rate>) rateService.getAll();
+    public ArrayList<Currency> showRates() {
+        return (ArrayList<Currency>) currencyService.getAll();
     }
 
     @GetMapping("{id}")
-    public Rate showRatesById(@PathVariable("id") Rate rate) {
+    public Currency showRatesById(@PathVariable("id") Currency rate) {
         if (rate == null)
             throw new NotFoundException();
 
