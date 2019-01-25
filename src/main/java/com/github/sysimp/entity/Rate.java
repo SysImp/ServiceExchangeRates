@@ -37,15 +37,20 @@ public class Rate {
         return value;
     }
 
-    public String getFromCurrnecy() {
+    public String getFromCurrency() {
         return fromCurrency;
     }
 
-    public String getToCurrnecy() {
+    public String getToCurrency() {
         return toCurrency;
     }
 
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
+
+    /*@Override
+    public String toString() {
+        return String.format("Rate{id:%d; value:%f; from:%s; to:%s}", id, value, fromCurrency, toCurrency);
+    }*/
 }

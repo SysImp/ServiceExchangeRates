@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<currencies xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="currnecyTemplate.xsd">
+    <currency>
+        <id>1</id>
+        <name>USD</name>
+        <description>Доллар США</description>
+    </currency>
+    <currency>
+        <id>2</id>
+        <name>RUB</name>
+        <description>Российский рубль</description>
+    </currency>
+    <currency>
+        <id>3</id>
+        <name>EUR</name>
+        <description>Европейская валюта</description>
+    </currency>
+    <currency>
+        <id>4</id>
+        <name>SOS</name>
+        <description>Сомалийский шиллинг</description>
+    </currency>
+    <currency>
+        <id>5</id>
+        <name>AZN</name>
+        <description>Азербайджанский манат</description>
+    </currency>
+    <currency>
+        <id>6</id>
+        <name>HKD</name>
+        <description>Гонконгский доллар</description>
+    </currency>
+    <currency>
+        <id>7</id>
+        <name>BTC</name>
+        <description>Биткойн</description>
+    </currency>
+    <currency>
+        <id>8</id>
+        <name>MYR</name>
+        <description>Малайзийский ринггит</description>
+    </currency>
+    <currency>
+        <id>9</id>
+        <name>AUD</name>
+        <description>Австралийский доллар</description>
+    </currency>
+</currencies>

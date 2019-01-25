@@ -1,6 +1,9 @@
 package com.github.sysimp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +13,6 @@ import java.time.LocalDateTime;
 public class Currency {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "currency_seq")
-    @SequenceGenerator(name = "currency_seq", sequenceName = "currency_seq", allocationSize = 1)
     private long id;
     private double value;
     private String name;
@@ -21,7 +22,8 @@ public class Currency {
 
     protected Currency() {}
 
-    public Currency(String name, String description, double value, LocalDateTime lastUpdate) {
+    public Currency(long id, String name, String description, double value, LocalDateTime lastUpdate) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
@@ -48,6 +50,10 @@ public class Currency {
         return lastUpdate;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
@@ -55,5 +61,18 @@ public class Currency {
     public void setValue(double value) {
         this.value = value;
         this.lastUpdate = LocalDateTime.now();
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getValueReverse() {
+        return 1 / value;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Currency{id:%d; value:%f; name:%s; description:%s}", id, value, name, description);
     }
 }
