@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="currencies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="currency" maxOccurs="10">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:integer"/>
+                            <xs:element name="name" type="xs:string" nillable="true"/>
+                            <xs:element name="description" type="xs:string" nillable="true"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <property name="log.level">${bundle:application:log.level}</property>
+        <property name="log.service.directory">${bundle:application:log.service.directory}</property>
+        <property name="log.service.file.size">${bundle:application:log.service.file.size}</property>
+        <property name="log.service.file.pattern">${bundle:application:log.service.file.pattern}</property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="fileService" filename="${log.service.directory}/services.log" filepattern="${log.service.directory}/$${date:yyyy-MM}/services %d{yyyy-MM-dd}-%i.log.gz">
+            <Patternlayout>
+                <Pattern>${log.service.file.pattern}</Pattern>
+            </Patternlayout>
+            <Policies>
+                <OnStartUpTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${log.service.file.size}"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="${log.level}" additivity="false">
+            <MarkerFilter marker="services" onMatch="DENY" onMismatch="NEUTRAL"/>
+            <Appender-ref ref="console"/>
+        </Root>
+        <Logger name="com.github.sysimp.services" level="${log.level}">
+            <Appender-ref ref="fileService"/>
+        </Logger>
+    </Loggers>
+</Configuration>

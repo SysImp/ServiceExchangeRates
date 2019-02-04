@@ -1,10 +1,7 @@
-package com.github.sysimp.entity;
+package com.github.sysimp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDateTime;
 
@@ -49,8 +46,8 @@ public class Rate {
         return lastUpdate;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         return String.format("Rate{id:%d; value:%f; from:%s; to:%s}", id, value, fromCurrency, toCurrency);
-    }*/
+    }
 }
