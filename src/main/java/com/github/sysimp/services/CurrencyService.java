@@ -161,7 +161,7 @@ public class CurrencyService {
             rate = getRate(args[0], args[1]);
         }
 
-        LOG.info(getMarker("services"), String.format("getRate(%s) return rate = ", rate));
+        LOG.info(getMarker("services"), String.format("getRate(%s) return rate = %s", request, rate));
         return rate;
     }
 
@@ -252,7 +252,7 @@ public class CurrencyService {
 
     private double getActualCurrency(String nameCurrency) {
         double value = -1;
-        LOG.info(getMarker("services"), "getActualCurrency(%s), nameCurrency");
+        LOG.info(getMarker("services"), String.format("getActualCurrency(%s)", nameCurrency));
         try (CloseableHttpClient client = HttpClients.createDefault(); CloseableHttpResponse response = client.execute(getHttpResponse(nameCurrency))) {
 
             InputStream inputStream = response.getEntity().getContent();

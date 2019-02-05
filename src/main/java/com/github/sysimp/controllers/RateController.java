@@ -27,7 +27,7 @@ public class RateController {
     public String showMain(Model model) {
         List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
         model.addAttribute("AllowCurrencies", list);
-        if (list.size() > 0 ) {
+        if (!list.isEmpty()) {
             model.addAttribute("from", list.get(0));
             model.addAttribute("to", list.get(0));
         }
