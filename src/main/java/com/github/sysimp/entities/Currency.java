@@ -72,10 +72,16 @@ public class Currency {
         this.description = description;
     }
 
-
     @Override
     public String toString() {
-        return String.format("Currency{id:%d; value:%f; name:%s; description:%s; hashCode:%d}", id, value, name, description, hashCode());
+        return "Currency{" +
+                "id=" + id +
+                ", value=" + value +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                ", hashCode=" + hashCode() +
+                '}';
     }
 
     @Override

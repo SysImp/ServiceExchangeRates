@@ -48,6 +48,11 @@ public class Rate {
 
     @Override
     public String toString() {
-        return String.format("Rate{id:%d; value:%f; from:%s; to:%s}", id, value, fromCurrency, toCurrency);
+        return"Rate{" +
+                "id=" + id +
+                ", value=" + value +
+                ", fromCurrency='" + fromCurrency + '\'' +
+                ", toCurrency='" + toCurrency + '\'' +
+                '}';
     }
 }

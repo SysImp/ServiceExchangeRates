@@ -1,6 +1,7 @@
 package com.github.sysimp.controllers;
 
 import com.github.sysimp.entities.Rate;
+import com.github.sysimp.exceptions.NotFoundException;
 import com.github.sysimp.services.CurrencyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Controller
 public class RateController {
@@ -31,23 +33,20 @@ public class RateController {
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.POST)
     public String searchMain(@RequestParam String count, @RequestParam String from, @RequestParam String to, Model model) {
+        if (!checkParam(from, to, count))
+            throw new NotFoundException();
+
+        Rate rate = currencyService.getRate(currencyService.createRequestForRate(from, to));
+        int multiplier = parseInt(count);
+
         List<String> list = currencyService.getAllowCurrencies();
         Collections.sort(list);
 
         model.addAttribute("AllowCurrencies", list);
         model.addAttribute("from", from);
         model.addAttribute("to", to);
-
-        int c = 1;
-        try {
-            c = Integer.parseInt(count);
-        } catch (NumberFormatException e) {
-        }
-
-        model.addAttribute("count", c);
-
-        Rate rate = currencyService.getRate(currencyService.createRequestForRate(from, to));
-        model.addAttribute("value", rate.getValue() * c);
+        model.addAttribute("count", multiplier);
+        model.addAttribute("value", rate.getValue() * multiplier);
 
         return "index";
     }
@@ -60,5 +59,21 @@ public class RateController {
         return model;
     }
 
+    private boolean checkParam(String from, String to, String count) {
+        List<String> allowCurrencies = currencyService.getAllowCurrencies();
+        if (!(allowCurrencies.contains(from) && allowCurrencies.contains(to))) {
+            return false;
+        }
 
+        Pattern pattern = Pattern.compile("[0-9]+");
+        return pattern.matcher(count).matches();
+    }
+
+    private int parseInt(String param) {
+        try {
+            return Integer.parseInt(param);
+        } catch (Exception e) {
+            return 1;
+        }
+    }
 }

@@ -29,7 +29,6 @@ class TemplateXMLCurrencies {
     }
 }
 
-
 class TemplateCurrency {
 
     @JacksonXmlProperty(localName = "id")

@@ -37,18 +37,15 @@ public class RateRestController {
         if (currency == null) {
             throw new NotFoundException();
         }
-
         return new Rate(currency.getValue(), currency.getName(), "USD", LocalDateTime.now());
     }
 
     @GetMapping("/get/{request}")
     public Rate showRatesByRequest(@PathVariable("request") String request) {
         Rate rate = currencyService.getRate(request);
-
         if (rate == null) {
-            return new Rate(0, "null", "null", null);
+            throw new NotFoundException();
         }
-
         return rate;
     }
 
