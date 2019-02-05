@@ -13,6 +13,7 @@
 <div>
     <a href="${pageContext.request.contextPath}/index">[Index]</a>
     <a href="${pageContext.request.contextPath}/combs">[Combs]</a>
+    <a href="${pageContext.request.contextPath}/currencies">[Currencies]</a>
 </div>
 <div>
     <table>

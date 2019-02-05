@@ -14,7 +14,7 @@
     <currency>
         <id>3</id>
         <name>EUR</name>
-        <description>Европейская валюта</description>
+        <description>Евро</description>
     </currency>
     <currency>
         <id>4</id>
@@ -45,5 +45,10 @@
         <id>9</id>
         <name>AUD</name>
         <description>Австралийский доллар</description>
+    </currency>
+    <currency>
+        <id>10</id>
+        <name>VND</name>
+        <description>Вьетнамский донг</description>
     </currency>
 </currencies>

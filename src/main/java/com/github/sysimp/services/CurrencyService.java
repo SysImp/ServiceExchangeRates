@@ -76,6 +76,10 @@ public class CurrencyService {
         return currencyRepository.findAll();
     }
 
+    public Currency getCurrencyByName(String name) {
+        return currencyRepository.getByName(name);
+    }
+
     public List<Currency> getAll(Sort sort) {
         LOG.info(getMarker("services"), String.format("getAll(Sort sort = %s)", sort.toString()));
         return currencyRepository.findAll(sort);

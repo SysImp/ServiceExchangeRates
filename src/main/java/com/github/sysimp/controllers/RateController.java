@@ -1,15 +1,16 @@
 package com.github.sysimp.controllers;
 
+import com.github.sysimp.entities.Currency;
 import com.github.sysimp.entities.Rate;
 import com.github.sysimp.exceptions.NotFoundException;
 import com.github.sysimp.services.CurrencyService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,7 +25,12 @@ public class RateController {
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public String showMain(Model model) {
-        model.addAttribute("AllowCurrencies", currencyService.getAllowCurrencies());
+        List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
+        model.addAttribute("AllowCurrencies", list);
+        if (list.size() > 0 ) {
+            model.addAttribute("from", list.get(0));
+            model.addAttribute("to", list.get(0));
+        }
         model.addAttribute("value", 0);
         model.addAttribute("count", 1);
 
@@ -39,12 +45,11 @@ public class RateController {
         Rate rate = currencyService.getRate(currencyService.createRequestForRate(from, to));
         int multiplier = parseInt(count);
 
-        List<String> list = currencyService.getAllowCurrencies();
-        Collections.sort(list);
+        List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
 
         model.addAttribute("AllowCurrencies", list);
-        model.addAttribute("from", from);
-        model.addAttribute("to", to);
+        model.addAttribute("from", currencyService.getCurrencyByName(from));
+        model.addAttribute("to", currencyService.getCurrencyByName(to));
         model.addAttribute("count", multiplier);
         model.addAttribute("value", rate.getValue() * multiplier);
 
@@ -52,10 +57,16 @@ public class RateController {
     }
 
     @RequestMapping(value = {"/combs"}, method = RequestMethod.GET)
-    public Model combs(Model model) {
+    public Model showCombs(Model model) {
         model.addAttribute("listCombs", currencyService.getListCombsRate());
         model.addAttribute("countCurrency", currencyService.getAll().size());
 
+        return model;
+    }
+
+    @RequestMapping(value = {"/currencies"}, method = RequestMethod.GET)
+    public Model showCurrencies(Model model) {
+        model.addAttribute("listCurrnecies", currencyService.getAll(new Sort(Sort.Direction.ASC, "id")));
         return model;
     }
 

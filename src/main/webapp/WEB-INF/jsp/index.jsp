@@ -13,6 +13,7 @@
 <div>
     <a href="${pageContext.request.contextPath}/index">[Index]</a>
     <a href="${pageContext.request.contextPath}/combs">[Combs]</a>
+    <a href="${pageContext.request.contextPath}/currencies">[Currencies]</a>
 </div>
 <div>
     <ul>
@@ -25,16 +26,16 @@
 <div>
     <form method="post">
         <input type="text" value="${count}" name="count" placeholder="Enter amount">
-        <select name="from">
+        <select title="${from.description}" name="from">
             <c:forEach  items="${AllowCurrencies}" var ="listCurrencies">
-                <c:set var="val" value="${from}"/>
-                <option ${listCurrencies == val ? "selected" : ""} value="${listCurrencies}">${listCurrencies}</option>
+                <c:set var="val" value="${from.name}"/>
+                <option title="${listCurrencies.description}" ${listCurrencies.name == val ? "selected" : ""} value="${listCurrencies.name}">${listCurrencies.name}</option>
             </c:forEach>
         </select>
-        <select name="to">
+        <select title="${from.description}" name="to">
             <c:forEach  items="${AllowCurrencies}" var ="listCurrencies">
-                <c:set var="val" value="${to}"/>
-                <option ${listCurrencies == val ? "selected" : ""} value="${listCurrencies}">${listCurrencies}</option>
+                <c:set var="val" value="${to.name}"/>
+                <option title="${listCurrencies.description}" ${listCurrencies.name == val ? "selected" : ""} value="${listCurrencies.name}">${listCurrencies.name}</option>
             </c:forEach>
         </select>
         <input type="text" disabled value="${value}">
