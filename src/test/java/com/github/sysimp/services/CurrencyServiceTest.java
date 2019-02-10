@@ -29,7 +29,7 @@ class CurrencyServiceTest {
             Currency currency = mock(Currency.class);
             when(currency.getId()).thenReturn(Long.valueOf(i));
             when(currency.getValue()).thenReturn(i + 10d);
-            if ((i % 2) == 0) {
+            if (i % 2 == 0) {
                 when(currency.getName()).thenReturn("USD");
             }
             else {
@@ -53,7 +53,7 @@ class CurrencyServiceTest {
     void getAllowCurrencies() {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            if ((i % 2) == 0) {
+            if (i % 2 == 0) {
                 list.add("USD");
             }
             else {

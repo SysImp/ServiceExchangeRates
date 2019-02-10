@@ -45,17 +45,17 @@ public class CurrencyService {
     }
 
     public void createCurrency(Currency currency) {
-        LOG.info(getMarker("services"), String.format("createCurrency: %s", currency));
+        LOG.info(getMarker("services"), "createCurrency: {}", currency);
         currencyRepository.save(currency);
     }
 
     public void editCurrency(Currency currency) {
-        LOG.info(getMarker("services"), String.format("editCurrency: %s", currency));
+        LOG.info(getMarker("services"), "editCurrency: {}", currency);
         currencyRepository.save(currency);
     }
 
     public void updateCurrency(Currency currency, TemplateCurrency template) {
-        LOG.info(getMarker("services"), String.format("updateCurrency: %s, template:%s", currency, template));
+        LOG.info(getMarker("services"), "updateCurrency: {}, template:{}", currency, template);
         currency.setId(template.getId());
         currency.setDescription(template.getDescription());
 
@@ -67,7 +67,7 @@ public class CurrencyService {
     }
 
     public void deleteCurrency(Currency currency) {
-        LOG.info(getMarker("services"), String.format("deleteCurrency: %s", currency));
+        LOG.info(getMarker("services"), "deleteCurrency: {}", currency);
         currencyRepository.delete(currency);
     }
 
@@ -81,7 +81,7 @@ public class CurrencyService {
     }
 
     public List<Currency> getAll(Sort sort) {
-        LOG.info(getMarker("services"), String.format("getAll(Sort sort = %s)", sort.toString()));
+        LOG.info(getMarker("services"), "getAll(Sort sort = {})", sort.toString());
         return currencyRepository.findAll(sort);
     }
 
@@ -91,7 +91,7 @@ public class CurrencyService {
         for (Currency currency : getAll()) {
             list.add(currency.getName());
         }
-        LOG.info(getMarker("services"), String.format("getAllowCurrencies().result = %s", list.toString()));
+        LOG.info(getMarker("services"), "getAllowCurrencies().result = {}", list.toString());
 
         return list;
     }
@@ -106,7 +106,7 @@ public class CurrencyService {
                 list.add(getRate(createRequestForRate(listAllCurrencies.get(i), listAllCurrencies.get(j))));
             }
         }
-        LOG.info(getMarker("services"), String.format("getListCombsRate().size = %d", list.size()));
+        LOG.info(getMarker("services"), "getListCombsRate().size = {}", list.size());
 
         return list;
     }
@@ -122,30 +122,30 @@ public class CurrencyService {
     }
 
     public String createRequestForRate(String from, String to) {
-        LOG.info(getMarker("services"), String.format("createRequestForRate(String from = %s, String to = %s)", from, to));
+        LOG.info(getMarker("services"), "createRequestForRate(String from = {}, String to = {})", from, to);
         return String.format("%s_%s", from, to);
     }
 
     public boolean checkRequest(String request) {
-        LOG.info(getMarker("services"), String.format("checkRequest(%s)", request));
+        LOG.info(getMarker("services"), "checkRequest({})", request);
         if (request.length() != 7) {
-            LOG.info(getMarker("services"), String.format("checkRequest(%s) return false;", request));
+            LOG.info(getMarker("services"), "checkRequest({}) return false;", request);
             return false;
         }
         //args[0] - from, args[1] - to
         String[] args = request.split("_");
 
         if (args.length != 2) {
-            LOG.info(getMarker("services"), String.format("checkRequest(%s) return false;", request));
+            LOG.info(getMarker("services"), "checkRequest({}) return false;", request);
             return false;
         }
 
-        LOG.info(getMarker("services"), String.format("checkRequest(%s) return true;", request));
+        LOG.info(getMarker("services"), "checkRequest({}) return true;", request);
         return true;
     }
 
     public Rate getRate(String request) {
-        LOG.info(getMarker("services"), String.format("getRate(%s)", request));
+        LOG.info(getMarker("services"), "getRate({})", request);
         if (!checkRequest(request)) {
             return null;
         }
@@ -161,7 +161,7 @@ public class CurrencyService {
             rate = getRate(args[0], args[1]);
         }
 
-        LOG.info(getMarker("services"), String.format("getRate(%s) return rate = %s", request, rate));
+        LOG.info(getMarker("services"), "getRate({}) return rate = {}", request, rate);
         return rate;
     }
 
@@ -198,12 +198,12 @@ public class CurrencyService {
     }
 
     private Rate getRate(String from, String to) {
-        LOG.info(getMarker("services"), String.format(" private Rate getRate(from = %s, to = %s)", from, to));
+        LOG.info(getMarker("services"), "private Rate getRate(from = {}, to = {})", from, to);
         Currency currencyFrom = currencyRepository.getByName(from);
         Currency currencyTo = currencyRepository.getByName(to);
 
         if (currencyFrom == null || currencyTo == null) {
-            LOG.info(getMarker("services"), String.format("private Rate getRate(from = %s, to = %s) return null;", from, to));
+            LOG.info(getMarker("services"), "private Rate getRate(from = {}, to = {}) return null;", from, to);
             return null;
         }
 
@@ -252,7 +252,7 @@ public class CurrencyService {
 
     private double getActualCurrency(String nameCurrency) {
         double value = -1;
-        LOG.info(getMarker("services"), String.format("getActualCurrency(%s)", nameCurrency));
+        LOG.info(getMarker("services"), "getActualCurrency({})", nameCurrency);
         try (CloseableHttpClient client = HttpClients.createDefault(); CloseableHttpResponse response = client.execute(getHttpResponse(nameCurrency))) {
 
             InputStream inputStream = response.getEntity().getContent();
@@ -265,9 +265,9 @@ public class CurrencyService {
             Rate rate = objectMapper.readValue(jNode.toString(), Rate.class);
             value = rate.getValue();
         } catch (Exception e) {
-            LOG.error(getMarker("services"), String.format("External API is fail. \n %s", e.getStackTrace()));
+            LOG.error(getMarker("services"), "External API is fail. \n {}", e.getStackTrace().toString());
         }
-        LOG.info(getMarker("services"), String.format("getActualCurrency(%s) = %f", nameCurrency, value));
+        LOG.info(getMarker("services"), "getActualCurrency({}) = {}", nameCurrency, value);
         return value;
     }
 

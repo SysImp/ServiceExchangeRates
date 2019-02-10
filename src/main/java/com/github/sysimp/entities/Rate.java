@@ -19,9 +19,9 @@ public class Rate {
 
     protected Rate() {}
 
-    public Rate(double value, String fromCurrnecy, String toCurrency, LocalDateTime lastUpdate) {
+    public Rate(double value, String fromCurrency, String toCurrency, LocalDateTime lastUpdate) {
         this.value = value;
-        this.fromCurrency = fromCurrnecy;
+        this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;
         this.lastUpdate = lastUpdate;
     }

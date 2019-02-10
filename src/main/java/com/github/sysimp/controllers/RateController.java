@@ -39,8 +39,9 @@ public class RateController {
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.POST)
     public String searchMain(@RequestParam String count, @RequestParam String from, @RequestParam String to, Model model) {
-        if (!checkParam(from, to, count))
+        if (!checkParam(from, to, count)) {
             throw new NotFoundException();
+        }
 
         Rate rate = currencyService.getRate(currencyService.createRequestForRate(from, to));
         int multiplier = parseInt(count);

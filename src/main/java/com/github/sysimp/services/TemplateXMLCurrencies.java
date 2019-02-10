@@ -19,8 +19,8 @@ class TemplateXMLCurrencies {
     }
 
     public boolean isLoadedById(long id) {
-        for (int i = 0; i < currencies.length; i++) {
-            if (currencies[i].getId() == id) {
+        for (TemplateCurrency templateCurrency : currencies) {
+            if (templateCurrency.getId() == id) {
                 return true;
             }
         }
