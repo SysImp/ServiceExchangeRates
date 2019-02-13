@@ -2,20 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="UTF-8" />
-    <title>ExchangeRate-Service</title>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/css/style.css"/>
-</head>
-<body>
-<h1>ExchangeRate-Service</h1>
-<div>
-    <a href="${pageContext.request.contextPath}/index">[Index]</a>
-    <a href="${pageContext.request.contextPath}/combs">[Combs]</a>
-    <a href="${pageContext.request.contextPath}/currencies">[Currencies]</a>
-</div>
-
+<jsp:include page="../jsp/fragments/header.jsp" />
 <div>
     <table border="1">
         <tr>

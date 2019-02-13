@@ -17,7 +17,6 @@ import static org.mockito.Mockito.*;
 
 class CurrencyServiceTest {
 
-
     private CurrencyService currencyService;
     private List<Currency> currencies;
 

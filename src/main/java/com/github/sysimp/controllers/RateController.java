@@ -1,59 +1,58 @@
 package com.github.sysimp.controllers;
 
+import com.github.sysimp.controllers.validator.ExchangeForm;
+import com.github.sysimp.controllers.validator.ExchangeFormValidator;
 import com.github.sysimp.entities.Currency;
 import com.github.sysimp.entities.Rate;
-import com.github.sysimp.exceptions.NotFoundException;
 import com.github.sysimp.services.CurrencyService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Controller
 public class RateController {
 
     private CurrencyService currencyService;
+    private ExchangeFormValidator exchangeFormValidator;
 
-    public RateController(CurrencyService currencyService) {
+    public RateController(CurrencyService currencyService, ExchangeFormValidator exchangeFormValidator) {
         this.currencyService = currencyService;
+        this.exchangeFormValidator = exchangeFormValidator;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(exchangeFormValidator);
     }
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
     public String showMain(Model model) {
-        List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
-        model.addAttribute("AllowCurrencies", list);
-        if (!list.isEmpty()) {
-            model.addAttribute("from", list.get(0));
-            model.addAttribute("to", list.get(0));
-        }
-        model.addAttribute("value", 0);
-        model.addAttribute("count", 1);
+        defaultModel(model);
+        ExchangeForm exchangeForm = new ExchangeForm();
+        model.addAttribute("exchangeForm", exchangeForm);
 
         return "index";
     }
 
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.POST)
-    public String searchMain(@RequestParam String count, @RequestParam String from, @RequestParam String to, Model model) {
-        if (!checkParam(from, to, count)) {
-            throw new NotFoundException();
+    public String searchMain(@ModelAttribute("exchangeForm") @Validated ExchangeForm exchangeForm, BindingResult result, Model model) {
+        defaultModel(model);
+        if (!result.hasErrors()) {
+            String request = currencyService.createRequestForRate(exchangeForm.getFromCurrency(), exchangeForm.getToCurrency());
+            int factor = parseInt(exchangeForm.getFactor());
+
+            Rate rate = currencyService.getRate(request);
+            exchangeForm.setValue(rate.getValue() * factor);
         }
-
-        Rate rate = currencyService.getRate(currencyService.createRequestForRate(from, to));
-        int multiplier = parseInt(count);
-
-        List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
-
-        model.addAttribute("AllowCurrencies", list);
-        model.addAttribute("from", currencyService.getCurrencyByName(from));
-        model.addAttribute("to", currencyService.getCurrencyByName(to));
-        model.addAttribute("count", multiplier);
-        model.addAttribute("value", rate.getValue() * multiplier);
-
         return "index";
     }
 
@@ -71,14 +70,9 @@ public class RateController {
         return model;
     }
 
-    private boolean checkParam(String from, String to, String count) {
-        List<String> allowCurrencies = currencyService.getAllowCurrencies();
-        if (!(allowCurrencies.contains(from) && allowCurrencies.contains(to))) {
-            return false;
-        }
-
-        Pattern pattern = Pattern.compile("[0-9]+");
-        return pattern.matcher(count).matches();
+    private void defaultModel(Model model) {
+        List<Currency> list = currencyService.getAll(new Sort(Sort.Direction.ASC, "name"));
+        model.addAttribute("AllowCurrencies", list);
     }
 
     private int parseInt(String param) {

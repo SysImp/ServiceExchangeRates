@@ -1,6 +1,7 @@
 package com.github.sysimp.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

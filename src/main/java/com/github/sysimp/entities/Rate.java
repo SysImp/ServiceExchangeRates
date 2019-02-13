@@ -17,7 +17,7 @@ public class Rate {
     private String toCurrency;
     private LocalDateTime lastUpdate;
 
-    protected Rate() {}
+    public Rate() {}
 
     public Rate(double value, String fromCurrency, String toCurrency, LocalDateTime lastUpdate) {
         this.value = value;
@@ -44,6 +44,26 @@ public class Rate {
 
     public LocalDateTime getLastUpdate() {
         return lastUpdate;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setFromCurrency(String fromCurrency) {
+        this.fromCurrency = fromCurrency;
+    }
+
+    public void setToCurrency(String toCurrency) {
+        this.toCurrency = toCurrency;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @Override
